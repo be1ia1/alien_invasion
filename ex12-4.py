@@ -3,9 +3,7 @@ import sys
 
 from rocket import Rocket
 
-
 class BlueSky():
-    
     def __init__(self) -> None:
         """Initialize the game, and create game resources"""
         pygame.init()
@@ -22,6 +20,7 @@ class BlueSky():
         self.rocket.blitme()
         pygame.display.flip()
 
+
     def _check_events(self):
         # Respond to keypresses and mouse events.
         for event in pygame.event.get():
@@ -32,6 +31,7 @@ class BlueSky():
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
+
 
     def _check_keydown_events(self, event):
         """Respond to keypress"""

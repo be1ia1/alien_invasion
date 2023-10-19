@@ -1,13 +1,11 @@
 import sys
 import pygame
 
-from settings import Settings
-from ship import Ship
-from bullet import Bullet
-from alien import Alien
+from ex_settings import Settings
+from ex_ship import Ship
+from ex_bullet import Bullet
 
-
-class AlienInvasion:
+class SidewaysShooter:
     """Overall class to manage game assets and behavior"""
 
     def __init__(self) -> None:
@@ -20,8 +18,6 @@ class AlienInvasion:
         pygame.display.set_caption('Alien Invasion')
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
-        self.aliens = pygame.sprite.Group()
-        self._create_fleet()
 
     def _check_events(self):
         # Respond to keypresses and mouse events.
@@ -35,10 +31,10 @@ class AlienInvasion:
 
     def _check_keydown_events(self, event):
         """Respond to keypress"""
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = True
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
         elif event.key == pygame.K_q:
@@ -46,10 +42,10 @@ class AlienInvasion:
 
     def _check_keyup_events(self, event):
         """Respond to key releases"""
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = False
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = False
+        if event.key == pygame.K_UP:
+            self.ship.moving_up = False
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = False
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
@@ -62,21 +58,8 @@ class AlienInvasion:
         self.bullets.update()
         
         for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
+            if bullet.rect.left >= self.settings.screen_width:
                 self.bullets.remove(bullet)
-
-    def _create_fleet(self):
-        """Create the fleet of aliens."""
-        alien = Alien(self)
-        alien_width = alien.rect.width
-        current_x = alien_width
-        while current_x < (self.settings.screen_height - 2 * alien_width):
-            new_alien = Alien(self)
-            new_alien.x = current_x
-            new_alien.rect.x = current_x
-            self.aliens.add(new_alien)
-            current_x += 2 * alien_width
-
 
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen
@@ -84,7 +67,6 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.ship.blitme()
-        self.aliens.draw(self.screen)
         pygame.display.flip()
 
     def run_game(self):
@@ -99,5 +81,5 @@ class AlienInvasion:
 
 if __name__ == '__main__':
     """Make a game instance, and run the game"""
-    ai = AlienInvasion()
+    ai = SidewaysShooter()
     ai.run_game()

@@ -6,7 +6,7 @@ class Rocket():
         self.screen = ex_game.screen
         self.screen_rect = ex_game.screen.get_rect()
         self.image = pygame.image.load('images/rocket.bmp')
-        self.rocket_speed = 1.5
+        self.rocket_speed = 5.5
 
         self.rect = self.image.get_rect()
 
