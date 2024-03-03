@@ -5,7 +5,7 @@ class Rocket():
         """Initialize the rocket and set its starting position"""
         self.screen = ex_game.screen
         self.screen_rect = ex_game.screen.get_rect()
-        self.image = pygame.image.load('images/rocket.bmp')
+        self.image = pygame.image.load('exercises/images/rocket.bmp')
         self.rocket_speed = 5.5
 
         self.rect = self.image.get_rect()
